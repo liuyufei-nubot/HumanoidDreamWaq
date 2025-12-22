@@ -1,7 +1,9 @@
 # DreamWaQ
 
 ## Description
-This repo contains implementation of the paper [Learning Robust Quadrupedal Locomotion With Implicit Terrain Imagination via Deep Reinforcement Learning](https://arxiv.org/abs/2301.10602)
+This repo builts upon [DreamWaq](https://github.com/Manaro-Alpha/DreamWaQ)
+
+This project has been migrated to the Unitree G1 12-degree-of-freedom robot.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -37,13 +39,16 @@ To train your robot run
     python3 legged_gym/scripts/train.py --task=[robot name]  
 ```  
 
+If you wish to implement blind stair climbing on the G1 robot
+```bash
+    python3 legged_gym/scripts/train.py --task=g1 --headless
+```  
+
 To evaluate the trained policy run
 ```bash
-    python3 legged_gym/scripts/play.py --task=[robot name]
+    python3 legged_gym/scripts/play.py --task=g1 (--load_run=xxxx --checkpoint=xxxx)
 ```  
-Go1:  
 
-![Go1](DwaQ_stairs.gif)
 
 ## Configuration
 Requires python 3.8 and numpy version<=1.24.
