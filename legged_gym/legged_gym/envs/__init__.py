@@ -41,8 +41,7 @@ from .a1.a1_config import A1RoughCfg, A1RoughCfgPPO
 from .go1.go1_config import Go1RoughCfg, Go1RoughCfgPPO
 from .g1.g1_env import G1Robot
 from .g1.g1_config import G1RoughCfg, G1RoughCfgPPO
-from .g1_dof29.g1_29 import G1_29
-from .g1_dof29.g1_29_config import G1_29_Cfg, G1_29_CfgPPO
+
 
 import os
 
@@ -55,4 +54,3 @@ task_registry.register( "a1", LeggedRobot, A1RoughCfg(), A1RoughCfgPPO() )
 task_registry.register( "cassie", Cassie, CassieRoughCfg(), CassieRoughCfgPPO() )
 task_registry.register( "go1", LeggedRobot, Go1RoughCfg(), Go1RoughCfgPPO() )
 task_registry.register( "g1", G1Robot, G1RoughCfg(), G1RoughCfgPPO())
-task_registry.register( "g1_29", G1_29, G1_29_Cfg(), G1_29_CfgPPO())

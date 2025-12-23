@@ -51,7 +51,7 @@ To evaluate the trained policy run
 
 
 ## Configuration
-Requires python 3.8 and numpy version<=1.24.
+Requires python 3.8 and numpy version<=1.24.  Recommend numpy==1.21.1
 
 ```
 
