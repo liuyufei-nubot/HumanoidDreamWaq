@@ -83,10 +83,55 @@ def play(args):
     camera_vel = np.array([1., 1., 0.])
     camera_direction = np.array(env_cfg.viewer.lookat) - np.array(env_cfg.viewer.pos)
     img_idx = 0
+    
+    # 用于打印command和state对比的变量
+    print_interval = 50  # 每N步打印一次
+    print_header_interval = 200  # 每N步打印一次表头
 
     for i in range(10*int(env.max_episode_length)):
         actions = policy(obs.detach(),obs_hist.detach())
         obs, _, _, obs_hist, rews, dones, infos = env.step(actions.detach())
+        
+        # 打印command和实际state的对比
+        if i % print_interval == 0:
+            # 获取command值
+            cmd_x = env.commands[robot_index, 0].item()
+            cmd_y = env.commands[robot_index, 1].item()
+            cmd_yaw = env.commands[robot_index, 2].item()
+            
+            # 获取实际状态值
+            actual_lin_vel_x = env.base_lin_vel[robot_index, 0].item()
+            actual_lin_vel_y = env.base_lin_vel[robot_index, 1].item()
+            actual_lin_vel_z = env.base_lin_vel[robot_index, 2].item()
+            actual_ang_vel_x = env.base_ang_vel[robot_index, 0].item()
+            actual_ang_vel_y = env.base_ang_vel[robot_index, 1].item()
+            actual_ang_vel_yaw = env.base_ang_vel[robot_index, 2].item()
+            
+            # 计算误差
+            error_lin_vel_x = cmd_x - actual_lin_vel_x
+            error_lin_vel_y = cmd_y - actual_lin_vel_y
+            error_ang_vel_yaw = cmd_yaw - actual_ang_vel_yaw
+            
+            # 打印表头（每隔一定步数）
+            if i % print_header_interval == 0:
+                print("\n" + "="*120)
+                print(f"{'Step':<8} | {'Command':<35} | {'Actual State':<45} | {'Error':<25}")
+                print(f"{'':<8} | {'X(m/s)':<11} {'Y(m/s)':<11} {'Yaw(rad/s)':<11} | "
+                      f"{'X(m/s)':<11} {'Y(m/s)':<11} {'Z(m/s)':<11} {'Yaw(rad/s)':<11} | "
+                      f"{'X(m/s)':<11} {'Y(m/s)':<11} {'Yaw(rad/s)':<11}")
+                print("="*120)
+            
+            # 打印数据
+            print(f"{i:<8} | "
+                  f"{cmd_x:<11.4f} {cmd_y:<11.4f} {cmd_yaw:<11.4f} | "
+                  f"{actual_lin_vel_x:<11.4f} {actual_lin_vel_y:<11.4f} {actual_lin_vel_z:<11.4f} {actual_ang_vel_yaw:<11.4f} | "
+                  f"{error_lin_vel_x:<11.4f} {error_lin_vel_y:<11.4f} {error_ang_vel_yaw:<11.4f}")
+            
+            # 额外打印角速度的x和y分量（虽然command中没有，但可以显示实际值）
+            if i % print_header_interval == 0:
+                print(f"\n{'Additional Info:':<20} Angular Vel X: {actual_ang_vel_x:.4f} rad/s, "
+                      f"Angular Vel Y: {actual_ang_vel_y:.4f} rad/s")
+                print()
         if RECORD_FRAMES:
             if i % 2:
                 filename = os.path.join(LEGGED_GYM_ROOT_DIR, 'logs', train_cfg.runner.experiment_name, 'exported', 'frames', f"{img_idx}.png")

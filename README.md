@@ -1,7 +1,7 @@
 # DreamWaQ
 
 ## Description
-This repo builts upon [DreamWaq](https://github.com/Manaro-Alpha/DreamWaQ)
+This repo is built upon [DreamWaq](https://github.com/Manaro-Alpha/DreamWaQ)
 
 This project has been migrated to the Unitree G1 12-degree-of-freedom robot.
 
@@ -49,10 +49,12 @@ To evaluate the trained policy run
     python3 legged_gym/scripts/play.py --task=g1 (--load_run=xxxx --checkpoint=xxxx)
 ```  
 
+For example, we provide pretrained checkpoints for g1 and go1:
+```bash
+    python3 legged_gym/scripts/play.py --task=g1 --load_run pretrained --num_envs=1
+    python3 legged_gym/scripts/play.py --task=go1 --load_run pretrained --num_envs=1
+```  
 
 ## Configuration
 Requires python 3.8 and numpy version<=1.24.  Recommend numpy==1.21.1
 
-```
-
-```
