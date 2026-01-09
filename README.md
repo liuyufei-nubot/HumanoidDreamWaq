@@ -51,8 +51,13 @@ To evaluate the trained policy run
 
 
 ## Configuration
+
+
+```
 Requires python 3.8 and numpy version<=1.24.  Recommend numpy==1.21.1
-
 ```
 
-```
+## Demo
+
+视频效果展示：[Bilibili](https://www.bilibili.com/video/BV1nbBHB4Eev/?spm_id_from=333.1387.list.card_archive.click&vd_source=048bb09272df1a2f8d6f6017feed52c1)
+
